@@ -1,0 +1,47 @@
+<odoo>
+    <record id="view_fleet_fuel_log_tree" model="ir.ui.view">
+        <field name="name">fleet.fuel.log.tree</field>
+        <field name="model">fleet.fuel.log</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="vehicle_id"/>
+                <field name="date"/>
+                <field name="fuel_type"/>
+                <field name="liters"/>
+                <field name="cost"/>   
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_fleet_fuel_log_form" model="ir.ui.view">
+        <field name="name">fleet.fuel.log.form</field>
+        <field name="model">fleet.fuel.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="vehicle_id"/>
+                            <field name="date"/>
+                            <field name="fuel_type"/>
+                            <field name="liters"/>
+                            <field name="cost"/>   
+                        </group>
+                        <group>
+                            <field name="odometer"/>
+                            <field name="notes"/>
+                        </group>
+                    </group>    
+                </sheet>           
+            </form>
+        </field>
+    </record>
+
+    <record id="action_fleet_fuel_log" model="ir.actions.act_window">
+        <field name="name">Fleet Fuel Logs</field>
+        <field name="res_model">fleet.fuel.log</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_fleet_fuel_log" name="Fuel Logs" parent="menu_fleet_management_root" action="action_fleet_fuel_log"/>
+</odoo>
