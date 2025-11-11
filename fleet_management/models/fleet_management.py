@@ -10,3 +10,5 @@ class FleetVehicle(models.Model):
     driver_name = fields.Char(string="Driver Name", required=True)
     odometer = fields.Float(string="Odometer Reading (km)")
     status = fields.Selection([('available', 'Available'), ('in_use', 'In Use'), ('under_maintenance', 'Under Maintenance')],string="Status", default='Available')
+    fuel_log_ids = fields.One2many('fleet.fuel.log', 'vehicle_id', string="Fuel Logs")
+    
