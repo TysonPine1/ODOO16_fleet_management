@@ -31,6 +31,7 @@
                             <field name="driver_name"/>
                             <field name="odometer"/>
                             <field name="status"/>
+                            <field name="total_fuel_cost" readonly="1"/>
                         </group>
                     </group>
                     <notebook>
