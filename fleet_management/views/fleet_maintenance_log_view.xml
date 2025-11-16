@@ -1,0 +1,47 @@
+<odoo>
+    <record id="view_fleet_maintenance_log_tree" model="ir.ui.view">
+        <field name="name">fleet.maintenance.log.tree</field>
+        <field name="model">fleet.maintenance.log</field>
+        <field name="arch" type="xml">
+            <tree string="Fleet Maintenance Logs">
+                <field name="vehicle_id"/>
+                <field name="maintenance_type"/>
+                <field name="next_due_date"/>
+                <field name="cost"/>
+                <field name="date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_fleet_maintenance_log_form" model="ir.ui.view">
+        <field name="name">fleet.maintenance.log.form</field>
+        <field name="model">fleet.maintenance.log</field>
+        <field name="arch" type="xml">
+            <form string="Fleet Maintenance Log">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="vehicle_id"/>
+                            <field name="maintenance_type"/>
+                            <field name="next_due_date"/>
+                        </group>
+                        <group>
+                            <field name="cost"/>
+                            <field name="date"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_fleet_maintenance_log" model="ir.actions.act_window">
+        <field name="name">Fleet Maintenance Logs</field>
+        <field name="res_model">fleet.maintenance.log</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_fleet_maintenance_log" name="Fleet Maintenance Logs" parent="menu_fleet_management_root" action="action_fleet_maintenance_log"/>
+</odoo>
