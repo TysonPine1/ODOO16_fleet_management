@@ -11,7 +11,7 @@ class FleetMaintenanceLog(models.Model):
         ('brake_inspection', 'Brake Inspection'),
         ('engine_tuneup', 'Engine Tune-Up')
     ], string="Maintenance Type", required=True)
-    cost = fields.Float(string="Cost", required=True)
+    cost = fields.Float(string="Maintenance Cost", required=True)
     date = fields.Date(string="Date", required=True)
     next_due_date = fields.Date(string="Next Due Date")
     notes = fields.Text(string="Notes")

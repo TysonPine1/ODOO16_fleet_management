@@ -1,4 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_fleet_management_admin,fleet.management admin,model_fleet_management,,1,1,1,1
-access_fleet_fuel_log_admin,Fleet Fuel Log Admin,model_fleet_fuel_log,,1,1,1,1
+access_fleet_fuel_log_admin,fleet.fuel.log admin Admin,model_fleet_fuel_log,,1,1,1,1
 access_fleet_maintenance_admin,fleet.maintenance admin,model_fleet_maintenance_log,,1,1,1,1

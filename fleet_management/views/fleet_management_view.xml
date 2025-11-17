@@ -26,12 +26,13 @@
                             <field name="license_plate"/>
                             <field name="vehicle_model"/>
                             <field name="vehicle_type"/>
+                            <field name="driver_name"/>
                         </group>
                         <group>
-                            <field name="driver_name"/>
                             <field name="odometer"/>
                             <field name="status"/>
                             <field name="total_fuel_cost" readonly="1"/>
+                            <field name="total_maintenance_cost" readonly="1"/>
                         </group>
                     </group>
                     <notebook>
