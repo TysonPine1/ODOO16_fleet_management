@@ -33,6 +33,7 @@
                             <field name="status"/>
                             <field name="total_fuel_cost" readonly="1"/>
                             <field name="total_maintenance_cost" readonly="1"/>
+                            <field name="total_expense" readonly="1"/>
                         </group>
                     </group>
                     <notebook>
@@ -42,8 +43,19 @@
                                     <field name="date"/>
                                     <field name="fuel_type"/>
                                     <field name="liters"/>
-                                    <field name="cost"/>
+                                    <field name="fuel_cost"/>
                                     <field name="odometer"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Maintenance Records">
+                            <field name="maintenance_ids">
+                                <tree editable="bottom">
+                                    <field name="maintenance_type"/>
+                                    <field name="date"/>
+                                    <field name="next_due_date"/>
+                                    <field name="maintenance_cost"/>
+                                    <field name="state"/>
                                 </tree>
                             </field>
                         </page>
@@ -53,12 +65,43 @@
         </field>
     </record>
 
+    <record id="view_fleet_management_dashboard_kanban" model="ir.ui.view">
+        <field name="name">fleet.management.dashboard.kanban</field>
+        <field name="model">fleet.management</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <strong><field name="name"/></strong>
+                            <div>Status: <field name="status"/></div>
+                            <div>Total Fuel Cost: <field name="total_fuel_cost"/></div>
+                            <div>Total Maintenance Cost: <field name="total_maintenance_cost"/></div>
+                            <div>Total Expense: <field name="total_expense"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="action_fleet_management" model="ir.actions.act_window">
         <field name="name">Fleet Management</field>
         <field name="res_model">fleet.management</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <record id="action_fleet_dashboard" model="ir.actions.act_window">
+        <field name="name">Fleet Dashboard</field>
+        <field name="res_model">fleet.management</field>
+        <field name="view_mode">kanban</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Welcome to Fleet Dashboard</p>
+        </field>
     </record>
 
     <menuitem id="menu_fleet_management_root" name="Fleet Management"/>
     <menuitem id="menu_fleet_management" name="Vehicles" parent="menu_fleet_management_root" action="action_fleet_management"/>
+    <menuitem id="menu_fleet_dashboard" name="Dashboard" parent="menu_fleet_management_root" action="action_fleet_dashboard"/>
+
 </odoo>

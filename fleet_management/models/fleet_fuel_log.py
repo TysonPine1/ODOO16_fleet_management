@@ -9,7 +9,7 @@ class FleetFuelLog(models.Model):
     date = fields.Date(string='Date', required=True)
     fuel_type = fields.Selection([('petrol', 'Petrol'), ('diesel', 'Diesel'), ('electric', 'Electric'), ('hybrid', 'Hybrid')], string='Fuel Type', required=True)
     liters = fields.Float(string='Liters', required=True)
-    cost = fields.Float(string='Cost', required=True)
+    fuel_cost = fields.Float(string='Cost', required=True)
     odometer = fields.Float(string='Odometer Reading (km)', required=True)
     notes = fields.Text(string='Notes')
 

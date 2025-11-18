@@ -7,7 +7,7 @@
                 <field name="vehicle_id"/>
                 <field name="maintenance_type"/>
                 <field name="next_due_date"/>
-                <field name="cost"/>
+                <field name="maintenance_cost"/>
                 <field name="date"/>
                 <field name="state"/>
             </tree>
@@ -27,7 +27,7 @@
                             <field name="next_due_date"/>
                         </group>
                         <group>
-                            <field name="cost"/>
+                            <field name="maintenance_cost"/>
                             <field name="date"/>
                             <field name="state"/>
                         </group>
