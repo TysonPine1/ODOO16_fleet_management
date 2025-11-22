@@ -33,11 +33,15 @@
                         </group>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
 
-    <record id="action_fleet_maintenance_log" model="ir.actions.act_window">
+    <record id="action_fleet_maintenance_log" model="ir.actions.act_window"> 
         <field name="name">Fleet Maintenance Logs</field>
         <field name="res_model">fleet.maintenance.log</field>
         <field name="view_mode">tree,form</field>
