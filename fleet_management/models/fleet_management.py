@@ -6,7 +6,7 @@ class FleetVehicle(models.Model):
     name = fields.Char(string="Vehicle Name", required=True)
     license_plate = fields.Char(string="License Plate", required=True)
     vehicle_model = fields.Char(string="Vehicle Model")
-    driver_name = fields.Char(string="Driver Name", required=True)
+    driver_name = fields.Many2one('res.partner', string="Driver Name", required=True)
 
     vehicle_type = fields.Selection([('car', 'Car'), ('truck', 'Truck'), ('semi-truck', 'Semi-Truck'), ('motorcycle', 'Motorcycle')])
     odometer = fields.Float(string="Odometer Reading (km)")
@@ -17,7 +17,7 @@ class FleetVehicle(models.Model):
 
     total_fuel_cost = fields.Float(string="Total Fuel Cost", compute="_compute_total_fuel_cost")
     total_maintenance_cost = fields.Float(string="Total Maintenance Cost", compute="_compute_total_maintenance_cost", store=True)
-    total_expense = fields.Float(string="Total Expense", compute="_compute_total_expense", store=True, required=True)
+    total_expense = fields.Float(string="Total Expense", compute="_compute_total_expense", store=True)
 
     @api.depends('fuel_log_ids.fuel_cost')
     def _compute_total_fuel_cost(self):

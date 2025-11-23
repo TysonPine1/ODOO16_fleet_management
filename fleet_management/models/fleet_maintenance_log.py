@@ -1,6 +1,4 @@
 from odoo import models, fields, api
-import logging
-_logger = logging.getLogger(__name__)
 
 class FleetMaintenanceLog(models.Model):
     _name = 'fleet.maintenance.log'
@@ -24,7 +22,6 @@ class FleetMaintenanceLog(models.Model):
         ('canceled', 'Canceled')
     ], string="Status", default='scheduled')
 
-
     def _cron_check_maintenance_due(self):
         today = fields.Date.today()
         logs = self.search([
@@ -32,11 +29,17 @@ class FleetMaintenanceLog(models.Model):
             ('next_due_date', '<=', today),
             ('state', '=', 'scheduled')
         ])
-        
+
+        admin_partners = self.env['res.users'].browse(1).mapped('partner_id')
+
         for rec in logs:
+            partners_to_notify = admin_partners 
+            rec.message_subscribe(partner_ids=partners_to_notify.ids) 
+
+           
             rec.message_post(
                 body=f"Maintenance is due for vehicle {rec.vehicle_id.name} on {rec.next_due_date}.",
                 subject="Maintenance Due Reminder",
-                message_type="notification",       
-                subtype_xmlid="mail.mt_comment",  
-        )
+                message_type="comment",         
+                subtype_xmlid="mail.mt_comment" 
+            )
