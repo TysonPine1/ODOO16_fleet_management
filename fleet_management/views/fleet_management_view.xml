@@ -70,10 +70,12 @@
         <field name="model">fleet.management</field>
         <field name="arch" type="xml">
             <kanban class="o_kanban_dashboard">
+                <field name="maintenance_due"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_card">
+                    <div t-att-class="{'oe_kanban_card': true,'bg-danger': record.maintenance_due.raw_value}">
                             <strong><field name="name"/></strong>
+                            <field name="status" widget="badge" options="{'color_field': 'status'}"/>
                             <div>Status: <field name="status"/></div>
                             <div>Total Fuel Cost: <field name="total_fuel_cost"/></div>
                             <div>Total Maintenance Cost: <field name="total_maintenance_cost"/></div>

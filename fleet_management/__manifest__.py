@@ -11,6 +11,5 @@
         'views/fleet_fuel_log_view.xml',
         'views/fleet_maintenance_log_view.xml',
         'security/ir.model.access.csv',
-
     ]
 }

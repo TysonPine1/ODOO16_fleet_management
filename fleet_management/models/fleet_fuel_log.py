@@ -12,5 +12,3 @@ class FleetFuelLog(models.Model):
     fuel_cost = fields.Float(string='Cost', required=True)
     odometer = fields.Float(string='Odometer Reading (km)', required=True)
     notes = fields.Text(string='Notes')
-
-    

@@ -3,13 +3,14 @@
         <field name="name">fleet.maintenance.log.tree</field>
         <field name="model">fleet.maintenance.log</field>
         <field name="arch" type="xml">
-            <tree string="Fleet Maintenance Logs">
+            <tree decoration-danger="maintenance_due" string="Fleet Maintenance Logs">
                 <field name="vehicle_id"/>
                 <field name="maintenance_type"/>
                 <field name="next_due_date"/>
                 <field name="maintenance_cost"/>
                 <field name="date"/>
                 <field name="state"/>
+                <field name="maintenance_due" invisible="1"/>
             </tree>
         </field>
     </record>
@@ -48,4 +49,4 @@
     </record>
 
     <menuitem id="menu_fleet_maintenance_log" name="Fleet Maintenance Logs" parent="menu_fleet_management_root" action="action_fleet_maintenance_log"/>
-</odoo>
+</odoo> 

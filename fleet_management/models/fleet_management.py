@@ -10,7 +10,7 @@ class FleetVehicle(models.Model):
 
     vehicle_type = fields.Selection([('car', 'Car'), ('truck', 'Truck'), ('semi-truck', 'Semi-Truck'), ('motorcycle', 'Motorcycle')])
     odometer = fields.Float(string="Odometer Reading (km)")
-    status = fields.Selection([('available', 'Available'), ('in_use', 'In Use'), ('under_maintenance', 'Under Maintenance')],string="Status", default='Available')
+    status = fields.Selection([('available', 'Available'), ('in_use', 'In Use'), ('under_maintenance', 'Under Maintenance')],string="Status", default='available')
 
     fuel_log_ids = fields.One2many('fleet.fuel.log', 'vehicle_id', string="Fuel Logs", )
     maintenance_ids = fields.One2many('fleet.maintenance.log', 'vehicle_id', string="Maintenance Record", required=True)
@@ -18,6 +18,8 @@ class FleetVehicle(models.Model):
     total_fuel_cost = fields.Float(string="Total Fuel Cost", compute="_compute_total_fuel_cost")
     total_maintenance_cost = fields.Float(string="Total Maintenance Cost", compute="_compute_total_maintenance_cost", store=True)
     total_expense = fields.Float(string="Total Expense", compute="_compute_total_expense", store=True)
+
+    maintenance_due = fields.Boolean(string="Maintenance Due", compute="_compute_maintenance_due", store=True)
 
     @api.depends('fuel_log_ids.fuel_cost')
     def _compute_total_fuel_cost(self):
@@ -33,4 +35,24 @@ class FleetVehicle(models.Model):
     def _compute_total_expense(self):
         for record in self:
             record.total_expense = record.total_fuel_cost + record.total_maintenance_cost
+    
 
+@api.depends('maintenance_ids.next_due_date', 'maintenance_ids.state')
+def _compute_maintenance_due(self):
+    today = fields.Date.today()
+    for record in self:
+        record.maintenance_due = any(
+            log.state == 'scheduled'
+            and log.next_due_date
+            and log.next_due_date <= today
+            for log in record.maintenance_ids
+        )
+
+    # @api.depends('maintenance_ids.next_due_date', 'maintenance_ids.state')
+    # def _compute_maintenance_due(self):
+    #     today = fields.Date.today()
+    #     for record in self:
+    #         record.maintenance_due = any(
+    #             log.state == 'scheduled' and log.next_due_date and log.next_due_date <= today
+    #             for log in record.maintenance_ids
+    #         )

@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from datetime import date
 
 class FleetMaintenanceLog(models.Model):
     _name = 'fleet.maintenance.log'
@@ -21,11 +22,12 @@ class FleetMaintenanceLog(models.Model):
         ('completed', 'Completed'),
         ('canceled', 'Canceled')
     ], string="Status", default='scheduled')
+    maintenance_due = fields.Boolean(string="Due for Maintenance", compute='_compute_maintenance_due', store=True)
 
     def _cron_check_maintenance_due(self):
         today = fields.Date.today()
         logs = self.search([
-            ('next_due_date', '!=', False),
+            # ('next_due_date', '!=', False),
             ('next_due_date', '<=', today),
             ('state', '=', 'scheduled')
         ])
@@ -34,12 +36,22 @@ class FleetMaintenanceLog(models.Model):
 
         for rec in logs:
             partners_to_notify = admin_partners 
+            if rec.vehicle_id.driver_name:
+                partners_to_notify |= rec.vehicle_id.driver_name
+            
             rec.message_subscribe(partner_ids=partners_to_notify.ids) 
 
-           
             rec.message_post(
                 body=f"Maintenance is due for vehicle {rec.vehicle_id.name} on {rec.next_due_date}.",
                 subject="Maintenance Due Reminder",
                 message_type="comment",         
                 subtype_xmlid="mail.mt_comment" 
+            )
+
+    @api.depends('next_due_date', 'state')
+    def _compute_maintenance_due(self):
+        today = date.today()
+        for rec in self:
+            rec.maintenance_due = bool(
+                rec.next_due_date and rec.next_due_date <= today and rec.state == 'scheduled'
             )
